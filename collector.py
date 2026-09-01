@@ -37,11 +37,18 @@ def get_yahoo_data(ticker):
         "change": round(change, 4),
         "change_percent": round(change_percent, 2)
     }
+
+
 def get_korea_data(ticker, name):
-    """KRX에서 KOSPI/KOSDAQ 최근 거래일 데이터를 가져옵니다."""
+    """KRX 지수 데이터 테스트"""
 
     today = now.strftime("%Y%m%d")
     start = (now - timedelta(days=30)).strftime("%Y%m%d")
+
+    print("=" * 60)
+    print(f"[TEST] {name}")
+    print(f"조회기간: {start} ~ {today}")
+    print(f"지수코드: {ticker}")
 
     try:
         data = stock.get_index_ohlcv_by_date(
@@ -50,8 +57,16 @@ def get_korea_data(ticker, name):
             ticker
         )
 
+        print(f"데이터 타입: {type(data)}")
+        print(f"행 개수: {len(data)}")
+        print("컬럼:")
+        print(data.columns.tolist())
+
+        print("최근 데이터:")
+        print(data.tail())
+
         if data.empty:
-            print(f"[WARNING] {name}: KRX 데이터가 없습니다.")
+            print(f"[FAIL] {name}: 데이터가 없습니다.")
             return None
 
         row = data.iloc[-1]
@@ -66,12 +81,14 @@ def get_korea_data(ticker, name):
             "change_percent": round(change_percent, 2)
         }
 
-        print(f"[OK] {name}: {result}")
+        print(f"[SUCCESS] {name}: {result}")
 
         return result
 
     except Exception as e:
-        print(f"[ERROR] {name}: {e}")
+        print(f"[ERROR] {name}: {type(e).__name__}")
+        print(f"[ERROR MESSAGE] {e}")
+
         return None
 
 
