@@ -37,16 +37,14 @@ def get_yahoo_data(ticker):
         "change": round(change, 4),
         "change_percent": round(change_percent, 2)
     }
-
-
 def get_korea_data(ticker, name):
-    """KRX에서 최근 거래일 데이터를 가져옵니다."""
+    """KRX에서 KOSPI/KOSDAQ 최근 거래일 데이터를 가져옵니다."""
 
     today = now.strftime("%Y%m%d")
     start = (now - timedelta(days=30)).strftime("%Y%m%d")
 
     try:
-        data = stock.get_market_ohlcv_by_date(
+        data = stock.get_index_ohlcv_by_date(
             start,
             today,
             ticker
