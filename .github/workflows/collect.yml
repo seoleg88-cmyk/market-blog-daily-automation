@@ -25,6 +25,10 @@ jobs:
         run: |
           python collector.py
 
+      - name: Validate market data
+        run:  |
+          python validator.py
+
       - name: Save market data
         uses: actions/upload-artifact@v4
         with:
