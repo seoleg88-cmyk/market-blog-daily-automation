@@ -2,7 +2,7 @@ name: Collect Market Data
 
 on:
   schedule:
-    - cron: '50 20 * * *'   # UTC 20:50 = 한국시간 05:50
+    - cron: '10 21 * * *'   # UTC 20:50 = 한국시간 05:50
   workflow_dispatch:
 
 permissions:
