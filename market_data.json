@@ -1,55 +1,55 @@
 {
-  "collected_at": "2026-09-16T06:22:09.372382+09:00",
+  "collected_at": "2026-09-17T06:24:05.218432+09:00",
   "us_market": {
     "S&P500": {
       "name": "S&P 500",
-      "date": "2026-09-15",
-      "close": 7585.73,
-      "previous_close": 7619.98,
-      "change": -34.25,
+      "date": "2026-09-16",
+      "close": 7551.81,
+      "previous_close": 7585.73,
+      "change": -33.92,
       "change_percent": -0.45
     },
     "NASDAQ": {
       "name": "NASDAQ",
-      "date": "2026-09-15",
-      "close": 25981.57,
-      "previous_close": 26186.41,
-      "change": -204.84,
-      "change_percent": -0.78
+      "date": "2026-09-16",
+      "close": 25978.42,
+      "previous_close": 25981.57,
+      "change": -3.15,
+      "change_percent": -0.01
     },
     "DOW": {
       "name": "Dow Jones",
-      "date": "2026-09-15",
-      "close": 52093.11,
-      "previous_close": 52421.2,
-      "change": -328.09,
-      "change_percent": -0.63
+      "date": "2026-09-16",
+      "close": 51461.9,
+      "previous_close": 52093.11,
+      "change": -631.21,
+      "change_percent": -1.21
     },
     "VIX": {
       "name": "VIX",
-      "date": "2026-09-15",
-      "close": 17.2,
-      "previous_close": 17.1,
-      "change": 0.1,
-      "change_percent": 0.58
+      "date": "2026-09-16",
+      "close": 17.71,
+      "previous_close": 17.2,
+      "change": 0.51,
+      "change_percent": 2.97
     }
   },
   "korea_market": {
     "KOSPI": {
       "name": "코스피",
-      "date": "2026-09-14",
-      "close": 6684.37,
-      "previous_close": 6909.91,
-      "change": -225.54,
-      "change_percent": -3.26
+      "date": "2026-09-15",
+      "close": 6627.26,
+      "previous_close": 6684.37,
+      "change": -57.11,
+      "change_percent": -0.85
     },
     "KOSDAQ": {
       "name": "코스닥",
-      "date": "2026-09-14",
-      "close": 806.79,
-      "previous_close": 820.64,
-      "change": -13.85,
-      "change_percent": -1.69
+      "date": "2026-09-15",
+      "close": 812.41,
+      "previous_close": 806.79,
+      "change": 5.62,
+      "change_percent": 0.7
     },
     "investor_flow": {
       "KOSPI": null,
@@ -59,55 +59,55 @@
   "exchange_rate": {
     "USD_KRW": {
       "name": "원/달러 환율",
-      "date": "2026-09-15",
-      "close": 1363.1801,
-      "previous_close": 1344.64,
-      "change": 18.54,
-      "change_percent": 1.38
+      "date": "2026-09-16",
+      "close": 1377.3,
+      "previous_close": 1345.61,
+      "change": 31.6901,
+      "change_percent": 2.36
     }
   },
   "bond_market": {
     "US10Y": {
       "name": "미국 10년물 국채금리",
-      "date": "2026-09-15",
-      "close": 4.996,
-      "previous_close": 4.961,
-      "change": 0.035,
-      "change_percent": 0.71
+      "date": "2026-09-16",
+      "close": 5.006,
+      "previous_close": 4.996,
+      "change": 0.01,
+      "change_percent": 0.2
     },
     "US2Y": {
       "name": "미국 단기 국채금리",
-      "date": "2026-09-15",
-      "close": 3.96,
-      "previous_close": 3.935,
-      "change": 0.025,
-      "change_percent": 0.64
+      "date": "2026-09-16",
+      "close": 3.97,
+      "previous_close": 3.96,
+      "change": 0.01,
+      "change_percent": 0.25
     }
   },
   "commodities": {
     "WTI": {
       "name": "WTI 원유",
-      "date": "2026-09-15",
-      "close": 105.48,
-      "previous_close": 101.39,
-      "change": 4.09,
-      "change_percent": 4.03
+      "date": "2026-09-16",
+      "close": 102.02,
+      "previous_close": 105.83,
+      "change": -3.81,
+      "change_percent": -3.6
     },
     "BRENT": {
       "name": "브렌트유",
-      "date": "2026-09-15",
-      "close": 108.5,
-      "previous_close": 105.68,
-      "change": 2.82,
-      "change_percent": 2.67
+      "date": "2026-09-16",
+      "close": 105.6,
+      "previous_close": 108.75,
+      "change": -3.15,
+      "change_percent": -2.9
     },
     "GOLD": {
       "name": "금",
-      "date": "2026-09-15",
-      "close": 4333.4,
-      "previous_close": 4351.9,
-      "change": -18.5,
-      "change_percent": -0.43
+      "date": "2026-09-16",
+      "close": 4302.5,
+      "previous_close": 4332.8,
+      "change": -30.3,
+      "change_percent": -0.7
     }
   }
 }
