@@ -1,5 +1,6 @@
 import yfinance as yf
 import json
+import pandas as pd
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
@@ -56,6 +57,43 @@ def get_market_data(ticker, name, digits=2):
 
         return result
 
+    except Exception as e:
+        print(f"[ERROR] {name}: {type(e).__name__}")
+        print(f"[ERROR MESSAGE] {e}")
+        return None
+
+def get_fred_yield(series_id, name):
+    """FRED에서 국채 수익률을 가져옵니다.
+    Yahoo/yfinance에는 2년물 국채금리용 신뢰할 만한 티커가 없어(^IRX는 13주물, 2YY=F는 만기 지난 특정월물)
+    2년물은 FRED의 DGS2 시계열을 사용합니다."""
+    url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
+    try:
+        df = pd.read_csv(url, parse_dates=["DATE"])
+        df = df.rename(columns={"DATE": "date", series_id: "value"})
+        df["value"] = pd.to_numeric(df["value"], errors="coerce")
+        df = df.dropna(subset=["value"]).tail(2)
+
+        if len(df) < 2:
+            print(f"[FAIL] {name}: 데이터가 부족합니다.")
+            return None
+
+        prev_row, latest_row = df.iloc[-2], df.iloc[-1]
+        close = float(latest_row["value"])
+        previous_close = float(prev_row["value"])
+        change = close - previous_close
+        change_percent = (change / previous_close) * 100
+
+        result = {
+            "name": name,
+            "date": latest_row["date"].strftime("%Y-%m-%d"),
+            "close": round(close, 3),
+            "previous_close": round(previous_close, 3),
+            "change": round(change, 3),
+            "change_percent": round(change_percent, 2)
+        }
+        print(f"[SUCCESS] {name}")
+        print(result)
+        return result
     except Exception as e:
         print(f"[ERROR] {name}: {type(e).__name__}")
         print(f"[ERROR MESSAGE] {e}")
