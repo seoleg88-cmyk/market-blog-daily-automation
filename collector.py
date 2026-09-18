@@ -248,7 +248,7 @@ def main():
 
     bond_market = {
         "US10Y": get_market_data("^TNX", "미국 10년물 국채금리", 3),
-        "US2Y": get_market_data("^IRX", "미국 단기 국채금리", 3)
+        "US2Y": get_fred_yield("DGS2", "미국 2년물 국채금리")
     }
 
     # ----------------------------------------
