@@ -356,6 +356,209 @@ def get_krx_investor_flow_with_fallback(market):
     return None
 
 
+# ----------------------------------------
+# 투자자별 순매수 상위 종목
+# ----------------------------------------
+
+TOP_N = 5
+
+
+def _pick_column(df, keyword):
+    """열 이름이 정확히 일치하지 않아도 keyword가 들어간 열을 찾습니다."""
+    if keyword in df.columns:
+        return keyword
+    for col in df.columns:
+        if keyword in str(col):
+            return col
+    return None
+
+
+def get_top_net_purchases(market, investor, date):
+    """
+    특정 거래일에 해당 투자자가 가장 많이 순매수/순매도한 종목 상위 N개.
+
+    단위: 원 (순매수거래대금)
+    """
+
+    print("=" * 60)
+    print(f"[KRX] {market} {investor} 순매수 상위 종목 ({date})")
+
+    try:
+        df = stock.get_market_net_purchases_of_equities(
+            date, date, market, investor
+        )
+
+        if df is None or df.empty:
+            print(f"[FAIL] {market} {investor}: 데이터 없음")
+            return None
+
+        value_col = _pick_column(df, "순매수거래대금")
+        name_col = _pick_column(df, "종목명")
+
+        print(f"[KRX] 열 목록: {list(df.columns)}")
+
+        if value_col is None:
+            print(f"[FAIL] {market} {investor}: 순매수거래대금 열을 찾지 못함")
+            return None
+
+        df = df.sort_values(value_col, ascending=False)
+
+        def rows(part):
+            items = []
+            for ticker, row in part.iterrows():
+                items.append({
+                    "ticker": str(ticker),
+                    "name": str(row[name_col]) if name_col else str(ticker),
+                    "amount": int(row[value_col])
+                })
+            return items
+
+        buy = [x for x in rows(df.head(TOP_N)) if x["amount"] > 0]
+        sell = [x for x in rows(df.tail(TOP_N).iloc[::-1]) if x["amount"] < 0]
+
+        if not buy and not sell:
+            print(f"[SKIP] {market} {investor}: 순매수/순매도가 전부 0")
+            return None
+
+        result = {"buy": buy, "sell": sell}
+        print(f"[SUCCESS] {market} {investor} 순매수 상위")
+        print(result)
+        return result
+
+    except Exception as e:
+        print(f"[ERROR] {market} {investor} 순매수 상위: {type(e).__name__}")
+        print(f"[ERROR MESSAGE] {e}")
+        return None
+
+
+def get_top_net_purchases_all(trade_date):
+    """코스피·코스닥 × 외국인·기관합계 순매수/순매도 상위 종목."""
+
+    if trade_date is None:
+        return None
+
+    date = trade_date.replace("-", "")
+
+    result = {
+        "date": trade_date,
+        "unit": "원",
+        "top_n": TOP_N
+    }
+
+    for market in ["KOSPI", "KOSDAQ"]:
+        result[market] = {
+            "외국인": get_top_net_purchases(market, "외국인", date),
+            "기관합계": get_top_net_purchases(market, "기관합계", date)
+        }
+
+    return result
+
+
+# ----------------------------------------
+# 코스피 업종별 등락률
+# ----------------------------------------
+
+# 업종이 아닌 지수(규모별·테마·파생 등)는 제외
+NON_SECTOR_KEYWORDS = [
+    "코스피", "KOSPI", "KRX", "대형", "중형", "소형",
+    "200", "100", "50", "배당", "우선주", "레버리지",
+    "인버스", "TR", "밸류업", "ESG", "선물"
+]
+
+
+def _is_sector(name):
+    return not any(k in name for k in NON_SECTOR_KEYWORDS)
+
+
+def get_sector_performance(trade_date, kospi_change_percent):
+    """
+    코스피 업종지수별 하루 등락률.
+
+    KRX '기간 등락률'은 조회 기간의 기준점 해석이 애매할 수 있어,
+    코스피 지수 자체의 등락률이 야후 값과 맞는 조회 구간을 찾아
+    그 구간의 업종 등락률을 사용합니다(자체 검증).
+    """
+
+    if trade_date is None:
+        return None
+
+    print("=" * 60)
+    print(f"[KRX] 코스피 업종별 등락률 ({trade_date})")
+
+    end = datetime.strptime(trade_date, "%Y-%m-%d").date()
+
+    # 같은 날(0) → 1~7일 전 시작으로 차례로 시도
+    for back in range(0, 8):
+
+        start = (end - timedelta(days=back)).strftime("%Y%m%d")
+        end_str = end.strftime("%Y%m%d")
+
+        try:
+            df = stock.get_index_price_change(start, end_str, "KOSPI")
+
+            if df is None or df.empty:
+                continue
+
+            rate_col = _pick_column(df, "등락률")
+            if rate_col is None:
+                print(f"[KRX] 등락률 열 없음: {list(df.columns)}")
+                continue
+
+            # 코스피 지수 행으로 조회 구간 검증
+            kospi_rows = [
+                n for n in df.index
+                if str(n).strip() in ("코스피", "KOSPI", "코스피 지수")
+            ]
+
+            if kospi_rows and kospi_change_percent is not None:
+                krx_kospi = float(df.loc[kospi_rows[0], rate_col])
+                print(
+                    f"[KRX] 시작일 {start}: 코스피 {krx_kospi}% "
+                    f"(야후 {kospi_change_percent}%)"
+                )
+                if abs(krx_kospi - kospi_change_percent) > 0.05:
+                    continue
+            elif back > 0:
+                # 검증할 코스피 행이 없으면 첫 시도 결과만 신뢰하지 않음
+                print("[KRX] 코스피 행을 찾지 못해 검증 불가")
+                continue
+
+            sectors = []
+            for name, row in df.iterrows():
+                name = str(name).strip()
+                if not _is_sector(name):
+                    continue
+                sectors.append({
+                    "name": name,
+                    "change_percent": round(float(row[rate_col]), 2)
+                })
+
+            if not sectors:
+                print("[FAIL] 업종 지수를 찾지 못함")
+                return None
+
+            if all(s["change_percent"] == 0 for s in sectors):
+                print(f"[SKIP] 시작일 {start}: 업종 등락률이 전부 0")
+                continue
+
+            sectors.sort(key=lambda s: s["change_percent"], reverse=True)
+
+            result = {
+                "date": trade_date,
+                "sectors": sectors
+            }
+
+            print(f"[SUCCESS] 업종 {len(sectors)}개")
+            print(sectors[:3], "...", sectors[-3:])
+            return result
+
+        except Exception as e:
+            print(f"[ERROR] 업종 등락률 ({start}): {type(e).__name__} {e}")
+
+    print("[FAIL] 코스피 등락률과 일치하는 업종 데이터를 찾지 못함")
+    return None
+
+
 def main():
 
     collected_at = datetime.now(KST).isoformat()
@@ -388,6 +591,22 @@ def main():
         "KOSPI": get_investor_flow("KOSPI"),
         "KOSDAQ": get_investor_flow("KOSDAQ")
     }
+
+    # 수급이 확인된 거래일을 기준으로 종목·업종 데이터 조회
+    kospi_flow = investor_flow["KOSPI"]
+    trade_date = kospi_flow["date"] if kospi_flow else None
+
+    top_net_purchases = get_top_net_purchases_all(trade_date)
+
+    # 야후 코스피 날짜가 수급 기준일과 같을 때만 검증값으로 사용
+    yahoo_kospi = korea_market["KOSPI"]
+    kospi_check = (
+        yahoo_kospi["change_percent"]
+        if yahoo_kospi and yahoo_kospi["date"] == trade_date
+        else None
+    )
+
+    sector_performance = get_sector_performance(trade_date, kospi_check)
 
     # ----------------------------------------
     # 환율
@@ -444,7 +663,9 @@ def main():
         "korea_market": {
             "KOSPI": korea_market["KOSPI"],
             "KOSDAQ": korea_market["KOSDAQ"],
-            "investor_flow": investor_flow
+            "investor_flow": investor_flow,
+            "top_net_purchases": top_net_purchases,
+            "sector_performance": sector_performance
         },
 
         "exchange_rate": exchange_rate,
