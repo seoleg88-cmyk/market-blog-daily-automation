@@ -30,6 +30,17 @@ REQUIRED_MARKETS = {
 }
 
 
+# 이 항목이 실패하면 저장하지 않음 (나머지는 경고만)
+CORE_MARKETS = {
+    "S&P500",
+    "NASDAQ",
+    "DOW",
+    "KOSPI",
+    "KOSDAQ",
+    "USD_KRW"
+}
+
+
 # 각 데이터에 반드시 존재해야 하는 값
 REQUIRED_FIELDS = [
     "name",
@@ -257,7 +268,15 @@ def main():
             )
 
             if not result:
-                overall_success = False
+                if market_name in CORE_MARKETS:
+                    overall_success = False
+                else:
+                    # 보조 항목 하나 때문에 그날 데이터 전체가
+                    # 저장되지 않는 일을 막기 위해 경고로만 처리
+                    print(
+                        f"[WARNING] {market_name}: 보조 항목이라 "
+                        f"실패해도 저장은 진행합니다. (값은 null)"
+                    )
 
     print()
     print("=" * 60)
