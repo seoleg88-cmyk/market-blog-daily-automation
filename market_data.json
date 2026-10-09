@@ -1,37 +1,37 @@
 {
-  "collected_at": "2026-10-09T23:44:05.435807+09:00",
+  "collected_at": "2026-10-09T23:55:38.615288+09:00",
   "us_market": {
     "S&P500": {
       "name": "S&P 500",
       "date": "2026-10-09",
-      "close": 7789.4,
+      "close": 7798.12,
       "previous_close": 7765.36,
-      "change": 24.04,
-      "change_percent": 0.31
+      "change": 32.76,
+      "change_percent": 0.42
     },
     "NASDAQ": {
       "name": "NASDAQ",
       "date": "2026-10-09",
-      "close": 27294.65,
+      "close": 27342.44,
       "previous_close": 27193.34,
-      "change": 101.31,
-      "change_percent": 0.37
+      "change": 149.1,
+      "change_percent": 0.55
     },
     "DOW": {
       "name": "Dow Jones",
       "date": "2026-10-09",
-      "close": 51386.71,
+      "close": 51440.03,
       "previous_close": 51231.64,
-      "change": 155.07,
-      "change_percent": 0.3
+      "change": 208.39,
+      "change_percent": 0.41
     },
     "VIX": {
       "name": "VIX",
       "date": "2026-10-09",
-      "close": 15.02,
+      "close": 15.03,
       "previous_close": 15.41,
-      "change": -0.39,
-      "change_percent": -2.53
+      "change": -0.38,
+      "change_percent": -2.47
     }
   },
   "korea_market": {
@@ -60,10 +60,10 @@
     "USD_KRW": {
       "name": "원/달러 환율",
       "date": "2026-10-09",
-      "close": 1341.23,
+      "close": 1341.62,
       "previous_close": 1339.08,
-      "change": 2.15,
-      "change_percent": 0.16
+      "change": 2.54,
+      "change_percent": 0.19
     }
   },
   "bond_market": {
@@ -81,33 +81,35 @@
       "close": 4.77,
       "previous_close": 4.79,
       "change": -0.02,
-      "change_percent": -0.42
+      "change_percent": -0.42,
+      "is_previous_day": true,
+      "note": "FRED 발표 지연으로 2026-10-07 기준(하루 전) 데이터"
     }
   },
   "commodities": {
     "WTI": {
       "name": "WTI 원유",
       "date": "2026-10-09",
-      "close": 91.41,
+      "close": 91.4,
       "previous_close": 91.49,
-      "change": -0.08,
-      "change_percent": -0.09
+      "change": -0.09,
+      "change_percent": -0.1
     },
     "BRENT": {
       "name": "브렌트유",
       "date": "2026-10-09",
-      "close": 104.25,
+      "close": 104.28,
       "previous_close": 104.28,
-      "change": -0.03,
-      "change_percent": -0.03
+      "change": 0.0,
+      "change_percent": 0.0
     },
     "GOLD": {
       "name": "금",
       "date": "2026-10-09",
-      "close": 4210.5,
+      "close": 4209.7,
       "previous_close": 4157.0,
-      "change": 53.5,
-      "change_percent": 1.29
+      "change": 52.7,
+      "change_percent": 1.27
     }
   }
 }
