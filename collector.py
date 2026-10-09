@@ -1,5 +1,8 @@
 import yfinance as yf
 import json
+import re
+import html
+import requests
 import pandas as pd
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
@@ -103,6 +106,149 @@ def get_fred_yield(series_id, name):
         print(f"[ERROR] {name}: {type(e).__name__}")
         print(f"[ERROR MESSAGE] {e}")
         return None
+
+
+NAVER_FLOW_URL = (
+    "https://finance.naver.com/sise/investorDealTrendDay.naver"
+    "?bizdate={bizdate}&sosok={sosok}"
+)
+
+# 네이버 금융 시장 구분 코드 (01=코스피, 02=코스닥)
+NAVER_SOSOK = {
+    "KOSPI": "01",
+    "KOSDAQ": "02"
+}
+
+
+def _cell_texts(row_html, tag):
+    """<tr> 안의 <td>/<th> 텍스트를 순서대로 뽑습니다."""
+    cells = re.findall(
+        rf"<{tag}[^>]*>(.*?)</{tag}>",
+        row_html,
+        flags=re.S | re.I
+    )
+    return [
+        html.unescape(re.sub(r"<[^>]+>", "", c)).strip()
+        for c in cells
+    ]
+
+
+def _to_int(text):
+    text = text.replace(",", "").replace("+", "").strip()
+    if text in ("", "-"):
+        return None
+    return int(float(text))
+
+
+def get_naver_investor_flow(market):
+    """
+    네이버 금융 '투자자별 매매동향(일별)'에서
+    가장 최근 거래일의 투자자별 순매수 금액을 가져옵니다.
+
+    단위: 억원 (양수=순매수, 음수=순매도)
+    """
+
+    print("=" * 60)
+    print(f"[NAVER] {market} 투자자별 수급")
+
+    bizdate = datetime.now(KST).strftime("%Y%m%d")
+    url = NAVER_FLOW_URL.format(
+        bizdate=bizdate,
+        sosok=NAVER_SOSOK[market]
+    )
+
+    try:
+        resp = requests.get(
+            url,
+            headers={
+                "User-Agent": (
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                    "AppleWebKit/537.36 (KHTML, like Gecko) "
+                    "Chrome/126.0 Safari/537.36"
+                ),
+                "Referer": "https://finance.naver.com/sise/sise_trans_style.naver"
+            },
+            timeout=15
+        )
+        resp.raise_for_status()
+        resp.encoding = "euc-kr"
+        page = resp.text
+
+        rows = re.findall(r"<tr[^>]*>(.*?)</tr>", page, flags=re.S | re.I)
+
+        # 헤더(th)에서 열 위치 찾기
+        header = []
+        for row in rows:
+            header += _cell_texts(row, "th")
+        print(f"[NAVER] 헤더: {header}")
+
+        # 첫 번째 날짜 행(가장 최근 거래일) 찾기
+        latest = None
+        for row in rows:
+            cells = _cell_texts(row, "td")
+            if cells and re.fullmatch(r"\d{2}\.\d{2}\.\d{2}", cells[0]):
+                latest = cells
+                break
+
+        if latest is None:
+            print(f"[FAIL] {market}: 날짜 행을 찾지 못했습니다.")
+            return None
+
+        print(f"[NAVER] 최신 행: {latest}")
+
+        # 열 순서: 날짜, 개인, 외국인, 기관계, (기관 세부...), 기타법인(마지막)
+        if len(latest) < 5:
+            print(f"[FAIL] {market}: 열 개수가 예상보다 적습니다.")
+            return None
+
+        yy, mm, dd = latest[0].split(".")
+        trade_date = f"20{yy}-{mm}-{dd}"
+
+        data = {
+            "개인": _to_int(latest[1]),
+            "외국인": _to_int(latest[2]),
+            "기관합계": _to_int(latest[3]),
+            "기타법인": _to_int(latest[-1])
+        }
+
+        # 헤더가 예상과 다르면 경고 (열 순서가 바뀌었을 가능성)
+        for label in ["개인", "외국인", "기관", "기타법인"]:
+            if header and not any(label in h for h in header):
+                print(f"[WARNING] {market}: 헤더에 '{label}'이 없습니다. 열 순서 확인 필요")
+
+        result = {
+            "date": trade_date,
+            "unit": "억원",
+            "source": "naver",
+            "data": data
+        }
+
+        print(f"[SUCCESS] {market} 투자자별 수급 (네이버)")
+        print(result)
+        return result
+
+    except Exception as e:
+        print(f"[ERROR] {market} 네이버 수급: {type(e).__name__}")
+        print(f"[ERROR MESSAGE] {e}")
+        return None
+
+
+def get_investor_flow(market):
+    """네이버 금융을 먼저 시도하고, 실패하면 KRX(pykrx)로 보완합니다."""
+
+    result = get_naver_investor_flow(market)
+
+    if result is not None:
+        return result
+
+    print(f"[INFO] {market}: 네이버 실패 → KRX(pykrx) 시도")
+    result = get_krx_investor_flow_with_fallback(market)
+
+    if result is not None:
+        result["unit"] = "원"
+        result["source"] = "krx"
+
+    return result
 
 
 def get_krx_investor_flow(market, date):
@@ -235,8 +381,8 @@ def main():
     # ----------------------------------------
 
     investor_flow = {
-        "KOSPI": get_krx_investor_flow_with_fallback("KOSPI"),
-        "KOSDAQ": get_krx_investor_flow_with_fallback("KOSDAQ")
+        "KOSPI": get_investor_flow("KOSPI"),
+        "KOSDAQ": get_investor_flow("KOSDAQ")
     }
 
     # ----------------------------------------
@@ -255,6 +401,22 @@ def main():
         "US10Y": get_market_data("^TNX", "미국 10년물 국채금리", 3),
         "US2Y": get_fred_yield("DGS2", "미국 2년물 국채금리")
     }
+
+    # FRED는 하루 늦게 발표되는 경우가 많아 2년물 기준일이
+    # 10년물(다른 미국 지표)보다 이를 수 있음 → 표시해 둠
+    us2y = bond_market["US2Y"]
+    us10y = bond_market["US10Y"]
+
+    if us2y is not None:
+        lagged = (
+            us10y is not None
+            and us2y["date"] < us10y["date"]
+        )
+        us2y["is_previous_day"] = lagged
+        us2y["note"] = (
+            f"FRED 발표 지연으로 {us2y['date']} 기준(하루 전) 데이터"
+            if lagged else ""
+        )
 
     # ----------------------------------------
     # 원자재
