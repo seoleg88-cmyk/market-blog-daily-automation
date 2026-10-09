@@ -27,9 +27,12 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run collector
+        env:
+          KRX_ID: ${{ secrets.KRX_ID }}
+          KRX_PW: ${{ secrets.KRX_PW }}
         run: |
           python collector.py
-
+      
       - name: Validate market data
         run: |
           python validator.py
