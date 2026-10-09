@@ -1,37 +1,37 @@
 {
-  "collected_at": "2026-10-09T23:55:38.615288+09:00",
+  "collected_at": "2026-10-10T00:11:30.144023+09:00",
   "us_market": {
     "S&P500": {
       "name": "S&P 500",
       "date": "2026-10-09",
-      "close": 7798.12,
+      "close": 7796.74,
       "previous_close": 7765.36,
-      "change": 32.76,
-      "change_percent": 0.42
+      "change": 31.38,
+      "change_percent": 0.4
     },
     "NASDAQ": {
       "name": "NASDAQ",
       "date": "2026-10-09",
-      "close": 27342.44,
+      "close": 27304.44,
       "previous_close": 27193.34,
-      "change": 149.1,
-      "change_percent": 0.55
+      "change": 111.1,
+      "change_percent": 0.41
     },
     "DOW": {
       "name": "Dow Jones",
       "date": "2026-10-09",
-      "close": 51440.03,
+      "close": 51467.11,
       "previous_close": 51231.64,
-      "change": 208.39,
-      "change_percent": 0.41
+      "change": 235.47,
+      "change_percent": 0.46
     },
     "VIX": {
       "name": "VIX",
       "date": "2026-10-09",
-      "close": 15.03,
+      "close": 14.98,
       "previous_close": 15.41,
-      "change": -0.38,
-      "change_percent": -2.47
+      "change": -0.43,
+      "change_percent": -2.79
     }
   },
   "korea_market": {
@@ -52,18 +52,38 @@
       "change_percent": -0.69
     },
     "investor_flow": {
-      "KOSPI": null,
-      "KOSDAQ": null
+      "KOSPI": {
+        "date": "2026-10-10",
+        "data": {
+          "개인": 0,
+          "외국인": 0,
+          "기관합계": 0,
+          "기타법인": 0
+        },
+        "unit": "원",
+        "source": "krx"
+      },
+      "KOSDAQ": {
+        "date": "2026-10-10",
+        "data": {
+          "개인": 0,
+          "외국인": 0,
+          "기관합계": 0,
+          "기타법인": 0
+        },
+        "unit": "원",
+        "source": "krx"
+      }
     }
   },
   "exchange_rate": {
     "USD_KRW": {
       "name": "원/달러 환율",
       "date": "2026-10-09",
-      "close": 1341.62,
+      "close": 1341.34,
       "previous_close": 1339.08,
-      "change": 2.54,
-      "change_percent": 0.19
+      "change": 2.26,
+      "change_percent": 0.17
     }
   },
   "bond_market": {
@@ -90,26 +110,26 @@
     "WTI": {
       "name": "WTI 원유",
       "date": "2026-10-09",
-      "close": 91.4,
+      "close": 91.99,
       "previous_close": 91.49,
-      "change": -0.09,
-      "change_percent": -0.1
+      "change": 0.5,
+      "change_percent": 0.55
     },
     "BRENT": {
       "name": "브렌트유",
       "date": "2026-10-09",
-      "close": 104.28,
+      "close": 104.83,
       "previous_close": 104.28,
-      "change": 0.0,
-      "change_percent": 0.0
+      "change": 0.55,
+      "change_percent": 0.53
     },
     "GOLD": {
       "name": "금",
       "date": "2026-10-09",
-      "close": 4209.7,
+      "close": 4205.3,
       "previous_close": 4157.0,
-      "change": 52.7,
-      "change_percent": 1.27
+      "change": 48.3,
+      "change_percent": 1.16
     }
   }
 }
