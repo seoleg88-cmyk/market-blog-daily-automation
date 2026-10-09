@@ -68,9 +68,14 @@ def get_fred_yield(series_id, name):
     2년물은 FRED의 DGS2 시계열을 사용합니다."""
     url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
     try:
-        df = pd.read_csv(url, parse_dates=["DATE"])
-        df = df.rename(columns={"DATE": "date", series_id: "value"})
+        df = pd.read_csv(url)
+        # FRED CSV 헤더가 'DATE' → 'observation_date'로 바뀐 적이 있어
+        # 이름에 의존하지 않고 첫 번째 열=날짜, 두 번째 열=값으로 읽습니다.
+        df = df.iloc[:, :2]
+        df.columns = ["date", "value"]
+        df["date"] = pd.to_datetime(df["date"], errors="coerce")
         df["value"] = pd.to_numeric(df["value"], errors="coerce")
+        df = df.dropna(subset=["date"])
         df = df.dropna(subset=["value"]).tail(2)
 
         if len(df) < 2:
