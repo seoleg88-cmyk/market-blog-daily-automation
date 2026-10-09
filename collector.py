@@ -234,14 +234,12 @@ def get_naver_investor_flow(market):
 
 
 def get_investor_flow(market):
-    """네이버 금융을 먼저 시도하고, 실패하면 KRX(pykrx)로 보완합니다."""
+    """KRX(pykrx, 로그인 필요)로 투자자별 수급을 가져옵니다.
 
-    result = get_naver_investor_flow(market)
+    네이버 금융 일별 수급 페이지(investorDealTrendDay)는
+    2026-10 확인 결과 410(페이지 폐지)이라 더 이상 호출하지 않습니다.
+    """
 
-    if result is not None:
-        return result
-
-    print(f"[INFO] {market}: 네이버 실패 → KRX(pykrx) 시도")
     result = get_krx_investor_flow_with_fallback(market)
 
     if result is not None:
@@ -302,6 +300,12 @@ def get_krx_investor_flow(market, date):
             value = df.loc[investor, "순매수"]
 
             result[investor] = int(value)
+
+        # 휴장일에는 KRX가 빈 표 대신 0으로 채운 표를 주는 경우가 있음
+        # → 전부 0이면 데이터 없음으로 보고 전날로 넘어가게 함
+        if all(not v for v in result.values()):
+            print(f"[SKIP] {market}: {date} 수급이 전부 0 (휴장일로 판단)")
+            return None
 
         print(f"[SUCCESS] {market} 투자자별 수급")
         print(result)
