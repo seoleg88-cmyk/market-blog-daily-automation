@@ -1,82 +1,82 @@
 {
-  "collected_at": "2026-10-14T09:34:39.994482+09:00",
+  "collected_at": "2026-10-15T09:03:46.474433+09:00",
   "us_market": {
     "S&P500": {
       "name": "S&P 500",
-      "date": "2026-10-13",
-      "close": 7805.45,
-      "previous_close": 7807.24,
-      "change": -1.79,
-      "change_percent": -0.02
+      "date": "2026-10-14",
+      "close": 7718.94,
+      "previous_close": 7805.45,
+      "change": -86.51,
+      "change_percent": -1.11
     },
     "NASDAQ": {
       "name": "NASDAQ",
-      "date": "2026-10-13",
-      "close": 27204.38,
-      "previous_close": 27245.9,
-      "change": -41.52,
-      "change_percent": -0.15
+      "date": "2026-10-14",
+      "close": 26692.87,
+      "previous_close": 27204.38,
+      "change": -511.51,
+      "change_percent": -1.88
     },
     "DOW": {
       "name": "Dow Jones",
-      "date": "2026-10-13",
-      "close": 51670.1,
-      "previous_close": 51850.55,
-      "change": -180.45,
-      "change_percent": -0.35
+      "date": "2026-10-14",
+      "close": 51621.48,
+      "previous_close": 51670.1,
+      "change": -48.62,
+      "change_percent": -0.09
     },
     "VIX": {
       "name": "VIX",
-      "date": "2026-10-13",
-      "close": 15.27,
-      "previous_close": 15.21,
-      "change": 0.06,
-      "change_percent": 0.39
+      "date": "2026-10-14",
+      "close": 16.87,
+      "previous_close": 15.27,
+      "change": 1.6,
+      "change_percent": 10.48
     }
   },
   "korea_market": {
     "KOSPI": {
       "name": "코스피",
-      "date": "2026-10-14",
-      "close": 6143.71,
+      "date": "2026-10-13",
+      "close": 6035.35,
       "previous_close": 6384.24,
-      "change": -240.53,
-      "change_percent": -3.77
+      "change": -348.89,
+      "change_percent": -5.46
     },
     "KOSDAQ": {
       "name": "코스닥",
-      "date": "2026-10-14",
-      "close": 838.53,
+      "date": "2026-10-13",
+      "close": 837.03,
       "previous_close": 849.19,
-      "change": -10.66,
-      "change_percent": -1.26
+      "change": -12.16,
+      "change_percent": -1.43
     },
     "investor_flow": {
       "KOSPI": {
-        "date": "2026-10-14",
+        "date": "2026-10-15",
         "data": {
-          "개인": -138918051870,
-          "외국인": 29602348510,
-          "기관합계": 37787337053,
-          "기타법인": 72391991408
+          "개인": -1824400074,
+          "외국인": -277267165233,
+          "기관합계": 273084855543,
+          "기타법인": 6175583936
         },
         "unit": "원",
         "source": "krx"
       },
       "KOSDAQ": {
-        "date": "2026-10-14",
+        "date": "2026-10-15",
         "data": {
-          "개인": 211476421987,
-          "외국인": -162749533012,
-          "기관합계": -50378985103,
-          "기타법인": 606514981
+          "개인": -73633097235,
+          "외국인": 64545970396,
+          "기관합계": 11249635545,
+          "기타법인": -1961144716
         },
         "unit": "원",
         "source": "krx"
       }
     },
     "top_net_purchases": {
-      "date": "2026-10-14",
+      "date": "2026-10-15",
       "unit": "원",
       "top_n": 5,
       "KOSPI": {
@@ -88,162 +88,62 @@
         "기관합계": null
       }
     },
-    "sector_performance": {
-      "date": "2026-10-14",
-      "sectors": [
-        {
-          "name": "오락·문화",
-          "change_percent": 2.58
-        },
-        {
-          "name": "통신",
-          "change_percent": 2.55
-        },
-        {
-          "name": "전기·가스",
-          "change_percent": 2.53
-        },
-        {
-          "name": "운송·창고",
-          "change_percent": 2.29
-        },
-        {
-          "name": "비금속",
-          "change_percent": 2.11
-        },
-        {
-          "name": "의료·정밀기기",
-          "change_percent": 1.77
-        },
-        {
-          "name": "일반서비스",
-          "change_percent": 1.01
-        },
-        {
-          "name": "건설",
-          "change_percent": 0.56
-        },
-        {
-          "name": "금속",
-          "change_percent": 0.45
-        },
-        {
-          "name": "섬유·의류",
-          "change_percent": 0.16
-        },
-        {
-          "name": "부동산",
-          "change_percent": 0.15
-        },
-        {
-          "name": "음식료·담배",
-          "change_percent": 0.1
-        },
-        {
-          "name": "IT 서비스",
-          "change_percent": 0.02
-        },
-        {
-          "name": "제약",
-          "change_percent": -0.22
-        },
-        {
-          "name": "운송장비·부품",
-          "change_percent": -0.35
-        },
-        {
-          "name": "화학",
-          "change_percent": -0.7
-        },
-        {
-          "name": "종이·목재",
-          "change_percent": -0.71
-        },
-        {
-          "name": "증권",
-          "change_percent": -1.2
-        },
-        {
-          "name": "유통",
-          "change_percent": -2.2
-        },
-        {
-          "name": "기계·장비",
-          "change_percent": -2.68
-        },
-        {
-          "name": "보험",
-          "change_percent": -2.89
-        },
-        {
-          "name": "금융",
-          "change_percent": -3.46
-        },
-        {
-          "name": "제조",
-          "change_percent": -4.27
-        },
-        {
-          "name": "전기전자",
-          "change_percent": -5.26
-        }
-      ]
-    }
+    "sector_performance": null
   },
   "exchange_rate": {
     "USD_KRW": {
       "name": "원/달러 환율",
-      "date": "2026-10-14",
-      "close": 1340.48,
-      "previous_close": 1334.13,
-      "change": 6.35,
-      "change_percent": 0.48
+      "date": "2026-10-15",
+      "close": 1340.58,
+      "previous_close": 1340.3101,
+      "change": 0.2699,
+      "change_percent": 0.02
     }
   },
   "bond_market": {
     "US10Y": {
       "name": "미국 10년물 국채금리",
-      "date": "2026-10-13",
-      "close": 5.217,
-      "previous_close": 5.24,
-      "change": -0.023,
-      "change_percent": -0.44
+      "date": "2026-10-14",
+      "close": 5.19,
+      "previous_close": 5.217,
+      "change": -0.027,
+      "change_percent": -0.52
     },
     "US2Y": {
       "name": "미국 2년물 국채금리",
-      "date": "2026-10-09",
-      "close": 4.8,
-      "previous_close": 4.75,
-      "change": 0.05,
-      "change_percent": 1.05,
+      "date": "2026-10-13",
+      "close": 4.79,
+      "previous_close": 4.8,
+      "change": -0.01,
+      "change_percent": -0.21,
       "is_previous_day": true,
-      "note": "FRED 발표 지연으로 2026-10-09 기준(하루 전) 데이터"
+      "note": "FRED 발표 지연으로 2026-10-13 기준(하루 전) 데이터"
     }
   },
   "commodities": {
     "WTI": {
       "name": "WTI 원유",
-      "date": "2026-10-13",
-      "close": 94.95,
-      "previous_close": 93.74,
-      "change": 1.21,
-      "change_percent": 1.29
+      "date": "2026-10-14",
+      "close": 94.77,
+      "previous_close": 94.14,
+      "change": 0.63,
+      "change_percent": 0.67
     },
     "BRENT": {
       "name": "브렌트유",
-      "date": "2026-10-13",
-      "close": 106.56,
-      "previous_close": 106.65,
-      "change": -0.09,
-      "change_percent": -0.08
+      "date": "2026-10-14",
+      "close": 105.66,
+      "previous_close": 105.69,
+      "change": -0.03,
+      "change_percent": -0.03
     },
     "GOLD": {
       "name": "금",
-      "date": "2026-10-13",
-      "close": 4182.2,
-      "previous_close": 4190.6,
-      "change": -8.4,
-      "change_percent": -0.2
+      "date": "2026-10-14",
+      "close": 4130.7,
+      "previous_close": 4177.3,
+      "change": -46.6,
+      "change_percent": -1.12
     }
   }
 }
