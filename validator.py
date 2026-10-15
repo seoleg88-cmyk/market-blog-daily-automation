@@ -184,6 +184,19 @@ def validate_market(market_name, data):
     except Exception:
         pass
 
+    # collector.py가 장 마감 전 실행(지연)을 감지해 직전 완결 거래일
+    # 데이터로 대체한 경우. 데이터 자체는 유효하지만, "오늘자"가 아니라
+    # 하루(또는 그 이상) 전 데이터라는 점을 로그에 남겨 둔다.
+    # (검증 실패로 처리하지는 않음 — collector.py가 이미 안전하게
+    # 대체한 정상적인 결과이기 때문)
+    if data.get("is_incomplete_session"):
+
+        print(
+            f"[WARNING] {market_name}: "
+            f"장 마감 전 실행으로 '오늘'의 미완결 봉을 걸러내고 "
+            f"직전 완결 거래일({data['date']}) 데이터로 대체되었습니다."
+        )
+
     if success:
 
         print(
@@ -229,6 +242,10 @@ def main():
 
     overall_success = True
 
+    # 실행 지연으로 '직전 완결 거래일' 데이터로 대체된 항목들
+    # (is_incomplete_session=true) 을 모아서 마지막에 한 번에 보여준다.
+    incomplete_markets = []
+
     # 수집 시각 확인
     if "collected_at" not in data:
 
@@ -262,9 +279,17 @@ def main():
                 overall_success = False
                 continue
 
+            market_data = data[market_group][market_name]
+
+            if (
+                isinstance(market_data, dict)
+                and market_data.get("is_incomplete_session")
+            ):
+                incomplete_markets.append(market_name)
+
             result = validate_market(
                 market_name,
-                data[market_group][market_name]
+                market_data
             )
 
             if not result:
@@ -279,12 +304,30 @@ def main():
                     )
 
     print()
+
+    if incomplete_markets:
+
+        print(
+            "[WARNING] 실행 지연으로 아래 항목은 "
+            "'오늘자'가 아닌 직전 완결 거래일 데이터로 대체되었습니다: "
+            f"{', '.join(incomplete_markets)}"
+        )
+
+        print()
+
     print("=" * 60)
 
     if overall_success:
 
         print("✅ 시장 데이터 검증 성공")
         print("모든 필수 데이터가 정상입니다.")
+
+        if incomplete_markets:
+            print(
+                "⚠️  다만 일부 항목은 지연 실행으로 전일 데이터로 "
+                "대체되었으니 블로그 작성 전 confirm 필요."
+            )
+
         print("=" * 60)
 
         sys.exit(0)
