@@ -12,9 +12,34 @@ from pykrx import stock
 
 KST = ZoneInfo("Asia/Seoul")
 
+# 한국 시장 마감 시각(KST) + 데이터 안정화 버퍼
+KRX_CLOSE_HOUR = 15
+KRX_CLOSE_MINUTE = 30
+KRX_CLOSE_BUFFER_MINUTES = 10
 
-def get_market_data(ticker, name, digits=2):
-    """Yahoo Finance에서 시장 데이터를 가져옵니다."""
+
+def _is_krx_closed_now():
+    """지금이 한국 거래소 마감 + 버퍼 시간을 지났는지 여부(KST 기준)."""
+    now_kst = datetime.now(KST)
+    cutoff = now_kst.replace(
+        hour=KRX_CLOSE_HOUR,
+        minute=KRX_CLOSE_MINUTE,
+        second=0,
+        microsecond=0
+    ) + timedelta(minutes=KRX_CLOSE_BUFFER_MINUTES)
+    return now_kst >= cutoff
+
+
+def get_market_data(ticker, name, digits=2, market_close_kst=None):
+    """Yahoo Finance에서 시장 데이터를 가져옵니다.
+
+    market_close_kst=(hour, minute)를 넘기면, 야후가 돌려준 마지막 봉이
+    '오늘'(KST) 날짜이면서 아직 해당 시장이 마감되지 않았을 경우
+    (실행이 지연돼 장중에 수집되는 경우 등) 그 봉을 미완결로 간주하고
+    한 칸 전(직전 완결 거래일) 데이터를 대신 사용합니다.
+    GitHub Actions의 schedule 트리거는 정시 실행을 보장하지 않으므로,
+    실행 시각이 언제든 안전하게 동작하도록 하기 위한 가드입니다.
+    """
 
     print("=" * 60)
     print(f"[TEST] {name}")
@@ -37,8 +62,33 @@ def get_market_data(ticker, name, digits=2):
             print(f"[FAIL] {name}: 이전 거래일 데이터가 없습니다.")
             return None
 
-        latest = data.iloc[-1]
-        previous = data.iloc[-2]
+        latest_idx = -1
+        is_incomplete_session = False
+
+        if market_close_kst is not None:
+            now_kst = datetime.now(KST)
+            latest_bar_date = data.index[-1].date()
+            close_hour, close_minute = market_close_kst
+            close_cutoff = now_kst.replace(
+                hour=close_hour,
+                minute=close_minute,
+                second=0,
+                microsecond=0
+            ) + timedelta(minutes=KRX_CLOSE_BUFFER_MINUTES)
+
+            if latest_bar_date == now_kst.date() and now_kst < close_cutoff:
+                if len(data) < 3:
+                    print(f"[FAIL] {name}: 미완결 봉을 제외하면 비교할 이전 거래일이 없습니다.")
+                    return None
+                latest_idx = -2
+                is_incomplete_session = True
+                print(
+                    f"[GUARD] {name}: 오늘({latest_bar_date}) 봉이 아직 마감 전으로 "
+                    f"판단되어 직전 완결 거래일 데이터로 대체합니다."
+                )
+
+        latest = data.iloc[latest_idx]
+        previous = data.iloc[latest_idx - 1]
 
         close = float(latest["Close"].iloc[0])
         previous_close = float(previous["Close"].iloc[0])
@@ -48,11 +98,12 @@ def get_market_data(ticker, name, digits=2):
 
         result = {
             "name": name,
-            "date": data.index[-1].strftime("%Y-%m-%d"),
+            "date": data.index[latest_idx].strftime("%Y-%m-%d"),
             "close": round(close, digits),
             "previous_close": round(previous_close, digits),
             "change": round(change, digits),
-            "change_percent": round(change_percent, 2)
+            "change_percent": round(change_percent, 2),
+            "is_incomplete_session": is_incomplete_session
         }
 
         print(f"[SUCCESS] {name}")
@@ -327,11 +378,26 @@ def get_krx_investor_flow_with_fallback(market):
 
     한국 시장은 주말/공휴일 및 KRX 데이터 제공 시점 때문에
     당일 데이터가 바로 조회되지 않을 수 있습니다.
+
+    또한 실행이 지연되어 '오늘' 장중(마감 전)에 수집이 이뤄지는 경우,
+    KRX 투자자별 수급은 당일 누적치가 계속 바뀌는 중이라 0이 아니더라도
+    최종값이 아닐 수 있습니다. 이를 막기 위해, 장이 아직 마감되지 않았으면
+    '오늘'은 조회 대상에서 완전히 제외하고 직전 완결 거래일부터 역추적합니다.
     """
 
     today = datetime.now(KST).date()
 
-    for i in range(7):
+    # 장이 아직 끝나지 않았다면(KRX_CLOSE_HOUR:KRX_CLOSE_MINUTE + 버퍼) '오늘'은
+    # 당일 집계가 끝나지 않은 것으로 보고 건너뛴다.
+    start_offset = 0 if _is_krx_closed_now() else 1
+
+    if start_offset > 0:
+        print(
+            f"[GUARD] {market}: 아직 장 마감 전으로 판단되어 "
+            f"오늘({today}) 수급은 건너뛰고 직전 거래일부터 조회합니다."
+        )
+
+    for i in range(start_offset, start_offset + 7):
 
         target_date = today - timedelta(days=i)
         date_str = target_date.strftime("%Y%m%d")
@@ -576,11 +642,17 @@ def main():
 
     # ----------------------------------------
     # 한국 시장
+    # 실행이 지연되어 한국 장중(09:00~15:30 KST)에 수집될 수 있으므로,
+    # market_close_kst를 넘겨 '오늘'의 미완결 봉을 걸러낸다.
     # ----------------------------------------
 
     korea_market = {
-        "KOSPI": get_market_data("^KS11", "코스피"),
-        "KOSDAQ": get_market_data("^KQ11", "코스닥")
+        "KOSPI": get_market_data(
+            "^KS11", "코스피", market_close_kst=(KRX_CLOSE_HOUR, KRX_CLOSE_MINUTE)
+        ),
+        "KOSDAQ": get_market_data(
+            "^KQ11", "코스닥", market_close_kst=(KRX_CLOSE_HOUR, KRX_CLOSE_MINUTE)
+        )
     }
 
     # ----------------------------------------
