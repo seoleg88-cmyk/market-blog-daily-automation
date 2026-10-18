@@ -1,200 +1,200 @@
 {
-  "collected_at": "2026-10-16T08:48:29.071794+09:00",
+  "collected_at": "2026-10-19T08:36:20.568355+09:00",
   "us_market": {
     "S&P500": {
       "name": "S&P 500",
-      "date": "2026-10-15",
-      "close": 7744.06,
-      "previous_close": 7718.94,
-      "change": 25.12,
-      "change_percent": 0.33,
+      "date": "2026-10-16",
+      "close": 7659.44,
+      "previous_close": 7744.06,
+      "change": -84.62,
+      "change_percent": -1.09,
       "is_incomplete_session": false
     },
     "NASDAQ": {
       "name": "NASDAQ",
-      "date": "2026-10-15",
-      "close": 26713.03,
-      "previous_close": 26692.87,
-      "change": 20.16,
-      "change_percent": 0.08,
+      "date": "2026-10-16",
+      "close": 26140.03,
+      "previous_close": 26713.03,
+      "change": -573.0,
+      "change_percent": -2.15,
       "is_incomplete_session": false
     },
     "DOW": {
       "name": "Dow Jones",
-      "date": "2026-10-15",
-      "close": 52177.69,
-      "previous_close": 51621.48,
-      "change": 556.21,
-      "change_percent": 1.08,
+      "date": "2026-10-16",
+      "close": 52002.41,
+      "previous_close": 52177.69,
+      "change": -175.28,
+      "change_percent": -0.34,
       "is_incomplete_session": false
     },
     "VIX": {
       "name": "VIX",
-      "date": "2026-10-15",
-      "close": 16.46,
-      "previous_close": 16.87,
-      "change": -0.41,
-      "change_percent": -2.43,
+      "date": "2026-10-16",
+      "close": 19.99,
+      "previous_close": 16.46,
+      "change": 3.53,
+      "change_percent": 21.45,
       "is_incomplete_session": false
     }
   },
   "korea_market": {
     "KOSPI": {
       "name": "코스피",
-      "date": "2026-10-14",
-      "close": 6008.81,
-      "previous_close": 6035.35,
-      "change": -26.54,
-      "change_percent": -0.44,
+      "date": "2026-10-16",
+      "close": 5668.05,
+      "previous_close": 5554.22,
+      "change": 113.83,
+      "change_percent": 2.05,
       "is_incomplete_session": false
     },
     "KOSDAQ": {
       "name": "코스닥",
-      "date": "2026-10-14",
-      "close": 823.88,
-      "previous_close": 837.03,
-      "change": -13.15,
-      "change_percent": -1.57,
+      "date": "2026-10-16",
+      "close": 794.78,
+      "previous_close": 760.82,
+      "change": 33.96,
+      "change_percent": 4.46,
       "is_incomplete_session": false
     },
     "investor_flow": {
       "KOSPI": {
-        "date": "2026-10-15",
+        "date": "2026-10-16",
         "data": {
-          "개인": 1394805306884,
-          "외국인": -3767746091472,
-          "기관합계": 1712053128225,
-          "기타법인": 651366006114
+          "개인": -510332383246,
+          "외국인": 321354230147,
+          "기관합계": -640293604886,
+          "기타법인": 830205411281
         },
         "unit": "원",
         "source": "krx"
       },
       "KOSDAQ": {
-        "date": "2026-10-15",
+        "date": "2026-10-16",
         "data": {
-          "개인": -74826603197,
-          "외국인": 225682479906,
-          "기관합계": -160896956294,
-          "기타법인": 13419108920
+          "개인": -96642439731,
+          "외국인": -90468761030,
+          "기관합계": 170899162848,
+          "기타법인": 18882918302
         },
         "unit": "원",
         "source": "krx"
       }
     },
     "top_net_purchases": {
-      "date": "2026-10-15",
+      "date": "2026-10-16",
       "unit": "원",
       "top_n": 5,
       "KOSPI": {
         "외국인": {
           "buy": [
             {
-              "ticker": "329180",
-              "name": "HD현대중공업",
-              "amount": 25781738000
+              "ticker": "005930",
+              "name": "삼성전자",
+              "amount": 199204539250
             },
             {
-              "ticker": "003490",
-              "name": "대한항공",
-              "amount": 20571218950
+              "ticker": "068270",
+              "name": "셀트리온",
+              "amount": 61057020800
             },
             {
-              "ticker": "402340",
-              "name": "SK스퀘어",
-              "amount": 20509970500
+              "ticker": "005380",
+              "name": "현대차",
+              "amount": 52958418000
             },
             {
-              "ticker": "023530",
-              "name": "롯데쇼핑",
-              "amount": 17935948150
+              "ticker": "005935",
+              "name": "삼성전자우",
+              "amount": 38486535950
             },
             {
-              "ticker": "004170",
-              "name": "신세계",
-              "amount": 16949558000
+              "ticker": "028260",
+              "name": "삼성물산",
+              "amount": 31523543000
             }
           ],
           "sell": [
             {
-              "ticker": "005930",
-              "name": "삼성전자",
-              "amount": -1549569788250
+              "ticker": "009150",
+              "name": "삼성전기",
+              "amount": -134289493500
             },
             {
               "ticker": "000660",
               "name": "SK하이닉스",
-              "amount": -1184736043000
+              "amount": -79108870000
             },
             {
-              "ticker": "009150",
-              "name": "삼성전기",
-              "amount": -254202732500
+              "ticker": "207940",
+              "name": "삼성바이오로직스",
+              "amount": -60880489000
             },
             {
               "ticker": "006400",
               "name": "삼성SDI",
-              "amount": -181374417500
+              "amount": -48758958000
             },
             {
-              "ticker": "105560",
-              "name": "KB금융",
-              "amount": -81248020950
+              "ticker": "003490",
+              "name": "대한항공",
+              "amount": -42778629000
             }
           ]
         },
         "기관합계": {
           "buy": [
             {
-              "ticker": "005930",
-              "name": "삼성전자",
-              "amount": 512437844500
-            },
-            {
-              "ticker": "000660",
-              "name": "SK하이닉스",
-              "amount": 83541069000
-            },
-            {
-              "ticker": "105560",
-              "name": "KB금융",
-              "amount": 83530945600
-            },
-            {
               "ticker": "207940",
               "name": "삼성바이오로직스",
-              "amount": 71574435000
+              "amount": 87525459000
             },
             {
               "ticker": "068270",
               "name": "셀트리온",
-              "amount": 50571737800
+              "amount": 49482236500
+            },
+            {
+              "ticker": "003230",
+              "name": "삼양식품",
+              "amount": 36233599000
+            },
+            {
+              "ticker": "352820",
+              "name": "하이브",
+              "amount": 29791342500
+            },
+            {
+              "ticker": "012330",
+              "name": "현대모비스",
+              "amount": 27359343000
             }
           ],
           "sell": [
             {
-              "ticker": "298040",
-              "name": "효성중공업",
-              "amount": -29345227500
+              "ticker": "000660",
+              "name": "SK하이닉스",
+              "amount": -381577192000
             },
             {
-              "ticker": "062040",
-              "name": "산일전기",
-              "amount": -18520923350
+              "ticker": "005930",
+              "name": "삼성전자",
+              "amount": -313678754000
             },
             {
-              "ticker": "009150",
-              "name": "삼성전기",
-              "amount": -14938451000
+              "ticker": "005935",
+              "name": "삼성전자우",
+              "amount": -73529659150
             },
             {
-              "ticker": "103590",
-              "name": "일진전기",
-              "amount": -12312825300
+              "ticker": "003490",
+              "name": "대한항공",
+              "amount": -42319751625
             },
             {
-              "ticker": "336260",
-              "name": "두산퓨얼셀",
-              "amount": -9215561100
+              "ticker": "402340",
+              "name": "SK스퀘어",
+              "amount": -33119458000
             }
           ]
         }
@@ -203,215 +203,215 @@
         "외국인": {
           "buy": [
             {
-              "ticker": "214450",
-              "name": "파마리서치",
-              "amount": 25381265000
-            },
-            {
-              "ticker": "036930",
-              "name": "주성엔지니어링",
-              "amount": 21727388600
-            },
-            {
               "ticker": "196170",
               "name": "알테오젠",
-              "amount": 18938665500
+              "amount": 30918807750
             },
             {
-              "ticker": "095610",
-              "name": "테스",
-              "amount": 17857888900
+              "ticker": "119850",
+              "name": "지엔씨에너지",
+              "amount": 19257334925
             },
             {
-              "ticker": "356860",
-              "name": "티엘비",
-              "amount": 11837933300
-            }
-          ],
-          "sell": [
-            {
-              "ticker": "086520",
-              "name": "에코프로",
-              "amount": -24975803850
-            },
-            {
-              "ticker": "089030",
-              "name": "테크윙",
-              "amount": -12944485075
-            },
-            {
-              "ticker": "078600",
-              "name": "대주전자재료",
-              "amount": -10917363350
-            },
-            {
-              "ticker": "257720",
-              "name": "실리콘투",
-              "amount": -9305447075
+              "ticker": "087010",
+              "name": "펩트론",
+              "amount": 7459997050
             },
             {
               "ticker": "247540",
               "name": "에코프로비엠",
-              "amount": -9181965800
+              "amount": 7097926850
+            },
+            {
+              "ticker": "035900",
+              "name": "JYP Ent.",
+              "amount": 5466688200
+            }
+          ],
+          "sell": [
+            {
+              "ticker": "036930",
+              "name": "주성엔지니어링",
+              "amount": -48932093250
+            },
+            {
+              "ticker": "031980",
+              "name": "피에스케이홀딩스",
+              "amount": -22291545400
+            },
+            {
+              "ticker": "222800",
+              "name": "심텍",
+              "amount": -21812935100
+            },
+            {
+              "ticker": "067310",
+              "name": "하나마이크론",
+              "amount": -20300422075
+            },
+            {
+              "ticker": "078600",
+              "name": "대주전자재료",
+              "amount": -17817864900
             }
           ]
         },
         "기관합계": {
           "buy": [
             {
-              "ticker": "257720",
-              "name": "실리콘투",
-              "amount": 13374343500
+              "ticker": "036930",
+              "name": "주성엔지니어링",
+              "amount": 18029016000
             },
             {
               "ticker": "196170",
               "name": "알테오젠",
-              "amount": 10669416000
+              "amount": 15986622500
             },
             {
               "ticker": "240810",
               "name": "원익IPS",
-              "amount": 8267341500
+              "amount": 12027267000
             },
             {
-              "ticker": "039030",
-              "name": "이오테크닉스",
-              "amount": 7769716000
+              "ticker": "257720",
+              "name": "실리콘투",
+              "amount": 12011398425
             },
             {
-              "ticker": "086520",
-              "name": "에코프로",
-              "amount": 7759829050
+              "ticker": "031980",
+              "name": "피에스케이홀딩스",
+              "amount": 11966026700
             }
           ],
           "sell": [
             {
-              "ticker": "036930",
-              "name": "주성엔지니어링",
-              "amount": -30825775550
-            },
-            {
-              "ticker": "095610",
-              "name": "테스",
-              "amount": -23409982100
+              "ticker": "119850",
+              "name": "지엔씨에너지",
+              "amount": -21917488050
             },
             {
               "ticker": "222800",
               "name": "심텍",
-              "amount": -14431558300
+              "amount": -9921099800
             },
             {
-              "ticker": "440110",
-              "name": "파두",
-              "amount": -14077110600
+              "ticker": "452280",
+              "name": "한선엔지니어링",
+              "amount": -5564250160
             },
             {
-              "ticker": "356860",
-              "name": "티엘비",
-              "amount": -13735464725
+              "ticker": "417200",
+              "name": "LS머트리얼즈",
+              "amount": -4722759415
+            },
+            {
+              "ticker": "089030",
+              "name": "테크윙",
+              "amount": -3864476450
             }
           ]
         }
       }
     },
     "sector_performance": {
-      "date": "2026-10-15",
+      "date": "2026-10-16",
       "sectors": [
         {
+          "name": "의료·정밀기기",
+          "change_percent": 6.05
+        },
+        {
           "name": "제약",
-          "change_percent": 2.65
-        },
-        {
-          "name": "음식료·담배",
-          "change_percent": 2.05
-        },
-        {
-          "name": "오락·문화",
-          "change_percent": 0.22
-        },
-        {
-          "name": "통신",
-          "change_percent": -1.0
-        },
-        {
-          "name": "일반서비스",
-          "change_percent": -1.82
-        },
-        {
-          "name": "비금속",
-          "change_percent": -1.84
-        },
-        {
-          "name": "부동산",
-          "change_percent": -2.0
-        },
-        {
-          "name": "전기·가스",
-          "change_percent": -2.06
-        },
-        {
-          "name": "운송·창고",
-          "change_percent": -2.41
-        },
-        {
-          "name": "섬유·의류",
-          "change_percent": -2.42
-        },
-        {
-          "name": "종이·목재",
-          "change_percent": -2.58
-        },
-        {
-          "name": "화학",
-          "change_percent": -3.57
-        },
-        {
-          "name": "IT 서비스",
-          "change_percent": -3.66
-        },
-        {
-          "name": "보험",
-          "change_percent": -3.87
-        },
-        {
-          "name": "금융",
-          "change_percent": -4.38
-        },
-        {
-          "name": "운송장비·부품",
-          "change_percent": -4.51
-        },
-        {
-          "name": "금속",
-          "change_percent": -5.07
+          "change_percent": 4.65
         },
         {
           "name": "유통",
-          "change_percent": -5.37
+          "change_percent": 4.28
         },
         {
-          "name": "건설",
-          "change_percent": -5.97
+          "name": "운송장비·부품",
+          "change_percent": 4.21
         },
         {
           "name": "증권",
-          "change_percent": -6.01
+          "change_percent": 4.16
+        },
+        {
+          "name": "오락·문화",
+          "change_percent": 4.01
         },
         {
           "name": "기계·장비",
-          "change_percent": -8.44
+          "change_percent": 3.33
+        },
+        {
+          "name": "IT 서비스",
+          "change_percent": 3.28
+        },
+        {
+          "name": "보험",
+          "change_percent": 2.38
+        },
+        {
+          "name": "음식료·담배",
+          "change_percent": 2.1
         },
         {
           "name": "제조",
-          "change_percent": -8.61
+          "change_percent": 2.1
         },
         {
-          "name": "의료·정밀기기",
-          "change_percent": -8.87
+          "name": "금속",
+          "change_percent": 2.09
+        },
+        {
+          "name": "섬유·의류",
+          "change_percent": 1.91
         },
         {
           "name": "전기전자",
-          "change_percent": -10.13
+          "change_percent": 1.75
+        },
+        {
+          "name": "금융",
+          "change_percent": 1.73
+        },
+        {
+          "name": "종이·목재",
+          "change_percent": 1.62
+        },
+        {
+          "name": "일반서비스",
+          "change_percent": 1.43
+        },
+        {
+          "name": "건설",
+          "change_percent": 1.38
+        },
+        {
+          "name": "화학",
+          "change_percent": 1.24
+        },
+        {
+          "name": "비금속",
+          "change_percent": 1.22
+        },
+        {
+          "name": "부동산",
+          "change_percent": 0.92
+        },
+        {
+          "name": "전기·가스",
+          "change_percent": 0.42
+        },
+        {
+          "name": "통신",
+          "change_percent": 0.21
+        },
+        {
+          "name": "운송·창고",
+          "change_percent": -0.45
         }
       ]
     }
@@ -419,61 +419,61 @@
   "exchange_rate": {
     "USD_KRW": {
       "name": "원/달러 환율",
-      "date": "2026-10-16",
-      "close": 1340.08,
-      "previous_close": 1339.35,
-      "change": 0.73,
-      "change_percent": 0.05,
+      "date": "2026-10-19",
+      "close": 1334.3199,
+      "previous_close": 1340.95,
+      "change": -6.63,
+      "change_percent": -0.49,
       "is_incomplete_session": false
     }
   },
   "bond_market": {
     "US10Y": {
       "name": "미국 10년물 국채금리",
-      "date": "2026-10-15",
-      "close": 5.089,
-      "previous_close": 5.19,
-      "change": -0.101,
-      "change_percent": -1.95,
+      "date": "2026-10-16",
+      "close": 5.098,
+      "previous_close": 5.089,
+      "change": 0.009,
+      "change_percent": 0.18,
       "is_incomplete_session": false
     },
     "US2Y": {
       "name": "미국 2년물 국채금리",
-      "date": "2026-10-14",
-      "close": 4.82,
-      "previous_close": 4.79,
-      "change": 0.03,
-      "change_percent": 0.63,
+      "date": "2026-10-15",
+      "close": 4.77,
+      "previous_close": 4.82,
+      "change": -0.05,
+      "change_percent": -1.04,
       "is_previous_day": true,
-      "note": "FRED 발표 지연으로 2026-10-14 기준(하루 전) 데이터"
+      "note": "FRED 발표 지연으로 2026-10-15 기준(하루 전) 데이터"
     }
   },
   "commodities": {
     "WTI": {
       "name": "WTI 원유",
-      "date": "2026-10-15",
-      "close": 96.1,
-      "previous_close": 95.09,
-      "change": 1.01,
-      "change_percent": 1.06,
+      "date": "2026-10-18",
+      "close": 98.07,
+      "previous_close": 101.41,
+      "change": -3.34,
+      "change_percent": -3.29,
       "is_incomplete_session": false
     },
     "BRENT": {
       "name": "브렌트유",
-      "date": "2026-10-15",
-      "close": 105.6,
-      "previous_close": 106.06,
-      "change": -0.46,
-      "change_percent": -0.43,
+      "date": "2026-10-18",
+      "close": 108.61,
+      "previous_close": 109.86,
+      "change": -1.25,
+      "change_percent": -1.14,
       "is_incomplete_session": false
     },
     "GOLD": {
       "name": "금",
-      "date": "2026-10-15",
-      "close": 4180.6,
-      "previous_close": 4107.9,
-      "change": 72.7,
-      "change_percent": 1.77,
+      "date": "2026-10-18",
+      "close": 4202.1,
+      "previous_close": 4181.1,
+      "change": 21.0,
+      "change_percent": 0.5,
       "is_incomplete_session": false
     }
   }
